@@ -80,6 +80,9 @@ export default function BuyerForm() {
     if (!form.phone || !/^[\d-]+$/.test(form.phone)) e.phone = '正しい電話番号を入力してください'
     if (!form.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = '正しいメールアドレスを入力してください'
     if (!form.industry) e.industry = '業種を選択してください'
+    if (form.website && !/^https?:\/\/.+\..+/.test(form.website)) {
+      e.website = '正しいURL形式で入力してください（例：https://example.jp）'
+    }
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -171,10 +174,10 @@ export default function BuyerForm() {
         </Field>
       </div>
 
-      <Field label="ホームページ（任意）">
+      <Field label="ホームページ（任意）" error={errors.website}>
         <input
-          type="url" value={form.website} onChange={set('website')}
-          className={inputCls()} placeholder="https://www.example.jp"
+          type="text" value={form.website} onChange={set('website')}
+          className={inputCls(errors.website)} placeholder="https://www.example.jp"
         />
       </Field>
 

@@ -77,6 +77,9 @@ export default function SellerForm() {
     if (!form.industry) e.industry = '業種を選択してください'
     if (!form.revenue) e.revenue = '年商を選択してください'
     if (!form.profit) e.profit = '営業利益を選択してください'
+    if (form.website && !/^https?:\/\/.+\..+/.test(form.website)) {
+      e.website = '正しいURL形式で入力してください（例：https://example.jp）'
+    }
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -166,10 +169,10 @@ export default function SellerForm() {
         </Field>
       </div>
 
-      <Field label="ホームページ（任意）">
+      <Field label="ホームページ（任意）" error={errors.website}>
         <input
-          type="url" value={form.website} onChange={set('website')}
-          className={inputCls()} placeholder="https://www.example.jp"
+          type="text" value={form.website} onChange={set('website')}
+          className={inputCls(errors.website)} placeholder="https://www.example.jp"
         />
       </Field>
 
