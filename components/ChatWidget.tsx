@@ -77,6 +77,7 @@ function AIIcon() {
 export default function ChatWidget() {
   const [open, setOpen]           = useState(false)
   const [showBalloon, setShowBalloon] = useState(false)
+  const [isMobile, setIsMobile]   = useState(false)
   const [messages, setMessages]   = useState<Message[]>([
     { role: 'ai', text: 'こんにちは！まず業種を教えてください。' },
   ])
@@ -87,6 +88,14 @@ export default function ChatWidget() {
   const [sending, setSending] = useState(false)
   const bottomRef  = useRef<HTMLDivElement>(null)
   const inputRef   = useRef<HTMLInputElement>(null)
+
+  // モバイル判定
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   // 吹き出し：1.5秒後（sessionStorage抑制）
   useEffect(() => {
@@ -385,10 +394,13 @@ export default function ChatWidget() {
       {/* ─── チャットウィンドウ ─── */}
       {open && (
         <div
-          className="fixed bottom-28 right-6 z-50 w-[340px] max-w-[calc(100vw-1.5rem)] rounded-2xl shadow-2xl overflow-hidden border border-[#1E3A6E] flex flex-col"
+          className={`fixed z-50 shadow-2xl overflow-hidden border border-[#1E3A6E] flex flex-col ${
+            isMobile
+              ? 'inset-0 w-full rounded-none'
+              : 'bottom-28 right-6 w-[340px] max-w-[calc(100vw-1.5rem)] rounded-2xl'
+          }`}
           style={{
-            // dvh でキーボード表示時にも画面内に収まる
-            height: 'min(500px, calc(100dvh - 120px))',
+            height: isMobile ? '100dvh' : 'min(500px, calc(100dvh - 120px))',
             animation: 'slideInUp 0.35s cubic-bezier(0.22,1,0.36,1) both',
           }}
         >
