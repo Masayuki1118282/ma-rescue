@@ -1,26 +1,126 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: #0A1F44;
+  --color-secondary: #1E3A6E;
+  --color-accent: #C8A96E;
+  --color-white: #FFFFFF;
+  --color-gray-light: #F5F7FA;
+  --color-gray-text: #4A5568;
+  --color-success: #2D8A6E;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: #0A1F44;
+  --color-secondary: #1E3A6E;
+  --color-accent: #C8A96E;
+  --color-gray-light: #F5F7FA;
+  --color-gray-text: #4A5568;
+  --color-success: #2D8A6E;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-white);
+  color: var(--color-primary);
+}
+
+/* ─── 無限スクロール（50秒でゆっくり） ─── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 51s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ─── パーティクル浮遊 ─── */
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.15; }
+  33%       { transform: translateY(-28px) translateX(12px) scale(1.1); opacity: 0.3; }
+  66%       { transform: translateY(-14px) translateX(-8px) scale(0.95); opacity: 0.2; }
+}
+
+/* ─── CTAボタン シマーエフェクト ─── */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(250%) skewX(-15deg); }
+}
+
+.btn-gold-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-gold-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 50%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%) skewX(-15deg);
+}
+.btn-gold-shimmer:hover::after {
+  animation: shimmer 0.65s ease-out forwards;
+}
+
+/* ─── スライドイン (左 / 右 / 下) ─── */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-48px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(48px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(36px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in-left  { animation: slideInLeft  0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.slide-in-right { animation: slideInRight 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.slide-in-up    { animation: slideInUp    0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+/* ─── フェードイン ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up {
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+
+/* ─── アコーディオン ─── */
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease-out;
+}
+.accordion-content.open {
+  max-height: 500px;
+}
+
+/* ─── prefers-reduced-motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .btn-gold-shimmer::after,
+  .slide-in-left,
+  .slide-in-right,
+  .slide-in-up,
+  .fade-in-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
