@@ -25,6 +25,8 @@ export default function Home() {
         <FAQSection />
       </main>
       <Footer />
+      {/* スマホでAI査定ボタンに隠れないよう余白 */}
+      <div className="h-24 md:hidden" />
       <ChatWidget />
     </>
   )

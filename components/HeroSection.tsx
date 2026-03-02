@@ -145,7 +145,7 @@ export default function HeroSection() {
 
         {/* 安心ポイント バッジ */}
         <div
-          className="flex flex-wrap items-center justify-center gap-3 mt-10 transition-all duration-700"
+          className="grid grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-3 mt-10 transition-all duration-700 max-w-sm md:max-w-none mx-auto"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(12px)',
@@ -155,10 +155,10 @@ export default function HeroSection() {
           {BADGES.map((b, i) => (
             <div
               key={i}
-              className="flex items-center gap-2 border border-[#C8A96E] bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-white"
+              className="flex items-center justify-center gap-2 border border-[#C8A96E] bg-white/10 backdrop-blur-sm rounded-full px-4 py-2.5 text-sm font-medium text-white w-full md:w-auto"
             >
-              <span className="text-[#C8A96E] font-bold">{b.icon}</span>
-              {b.text}
+              <span className="text-[#C8A96E] font-bold text-base leading-none">{b.icon}</span>
+              <span className="text-[14px] leading-none">{b.text}</span>
             </div>
           ))}
         </div>
