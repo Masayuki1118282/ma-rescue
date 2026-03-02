@@ -91,11 +91,20 @@ export default function BuyerForm() {
     e.preventDefault()
     if (!validate()) return
     setLoading(true)
-    const submitData = {
-      ...form,
-      acquisitionIndustries: form.acquisitionIndustries.join('、'),
+    const payload: Record<string, string> = {
+      companyName:              form.companyName,
+      corporateNumber:          form.corporateNumber,
+      representativeName:       form.representativeName,
+      address:                  form.postalCode ? `〒${form.postalCode} ${form.address}` : form.address,
+      phone:                    form.phone,
+      email:                    form.email,
+      website:                  form.website,
+      industry:                 form.industry,
+      revenue:                  form.revenue,
+      acquisitionIndustries:    form.acquisitionIndustries.join('、'),
+      acquisitionScale:         form.acquisitionScale,
     }
-    const ok = await submitToGAS(submitData as Record<string, string>, 'buyer')
+    const ok = await submitToGAS(payload, 'buyer')
     setLoading(false)
     if (ok) setSubmitted(true)
   }
