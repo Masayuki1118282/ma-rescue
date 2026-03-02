@@ -88,7 +88,24 @@ export default function SellerForm() {
     e.preventDefault()
     if (!validate()) return
     setLoading(true)
-    const ok = await submitToGAS(form as unknown as Record<string, string>, 'seller')
+    const payload: Record<string, string> = {
+      companyName:        form.companyName,
+      representativeName: form.representativeName,
+      birthDate:          form.birthDate,
+      address:            form.postalCode ? `〒${form.postalCode} ${form.address}` : form.address,
+      phone:              form.phone,
+      email:              form.email,
+      website:            form.website,
+      industry:           form.industry,
+      revenue:            form.revenue,
+      profit:             form.profit,
+      employees:          form.employees,
+      foundedYear:        form.founded,
+      bank:               form.bank,
+      fixedAssets:        form.fixedAssets,
+      totalDebt:          form.totalDebt,
+    }
+    const ok = await submitToGAS(payload, 'seller')
     setLoading(false)
     if (ok) setSubmitted(true)
   }

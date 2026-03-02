@@ -265,16 +265,21 @@ export default function ChatWidget() {
   const handleRegister = async () => {
     setSending(true)
     const payload: Record<string, string> = {
-      companyName:    data.companyName,
-      repName:        data.repName,
-      phone:          data.phone,
-      email:          data.email,
-      industry:       data.industry,
-      revenue:        data.revenueLabel,
-      profit:         data.profitLabel,
-      employees:      data.employees,
-      founded:        data.founded,
-      source:         'ai_chat',
+      companyName:        data.companyName,
+      representativeName: data.repName,
+      birthDate:          '',
+      address:            '',
+      phone:              data.phone,
+      email:              data.email,
+      website:            '',
+      industry:           data.industry,
+      revenue:            data.revenueLabel,
+      profit:             data.profitLabel,
+      employees:          data.employees,
+      foundedYear:        data.founded,
+      bank:               '',
+      fixedAssets:        '',
+      totalDebt:          '',
     }
     const ok = await submitToGAS(payload, 'seller')
     setSending(false)
