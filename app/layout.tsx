@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Noto_Serif_JP, Noto_Sans_JP } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const notoSerifJP = Noto_Serif_JP({
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="ja" className={`${notoSerifJP.variable} ${notoSansJP.variable}`}>
       <body className="antialiased" style={{ fontFamily: 'var(--font-sans), sans-serif' }}>
         {children}
+        <Analytics />
       </body>
     </html>
   )
